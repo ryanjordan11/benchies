@@ -11,7 +11,56 @@ export interface BenchmarkPreset {
 
 export type SentenceStatus = "grounded" | "partial" | "hallucination";
 export type EvaluationMode = "standard" | "strict_verbatim";
-export type ActiveTab = "the_benchies" | "verbatim_diff" | "benchmark_lab" | "audit_deepdive" | "leaderboard";
+export type ActiveTab = "the_benchies" | "system_benchmark" | "verbatim_diff" | "benchmark_lab" | "audit_deepdive" | "leaderboard";
+
+export type SystemBenchmarkDomain = "Healthcare" | "Legal" | "Enterprise";
+
+export interface SystemBenchmarkCase {
+  id: string;
+  title: string;
+  pressureType: string;
+  prompt: string;
+}
+
+export interface SystemBenchmarkSuite {
+  id: string;
+  title: string;
+  domain: SystemBenchmarkDomain;
+  version: string;
+  summary: string;
+  difficulty: "Hard" | "Severe";
+  seedPayload: string;
+  cases: SystemBenchmarkCase[];
+}
+
+export interface SystemCaseResult {
+  caseId: string;
+  title: string;
+  passed: boolean;
+  verdict: "PASS" | "FAIL";
+  reason: string;
+  triggeredRules: string[];
+  rawOutput: string;
+}
+
+export interface SystemBenchmarkRun {
+  runId: string;
+  suiteId: string;
+  suiteTitle: string;
+  suiteVersion: string;
+  systemName: string;
+  modelName: string;
+  startedAt: string;
+  completedAt: string;
+  seedPayload: string;
+  cases: Array<SystemBenchmarkCase & { rawOutput: string }>;
+  results: SystemCaseResult[];
+  passed: number;
+  total: number;
+  passRate: number;
+  hallucinationRate: number;
+  protocol: "two-chat-cross-session";
+}
 
 export interface LineDiffItem {
   lineNumber: number;

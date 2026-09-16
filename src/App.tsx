@@ -13,6 +13,7 @@ import { PresetSelectorModal } from "./components/PresetSelectorModal";
 import { VerbatimDiffPage } from "./components/VerbatimDiffPage";
 import { AuditDeepDivePage } from "./components/AuditDeepDivePage";
 import { TheBenchiesLanding } from "./components/TheBenchiesLanding";
+import { SystemBenchmarkPage } from "./components/SystemBenchmarkPage";
 import { Toast, ToastMessage } from "./components/Toast";
 import { BENCHMARK_PRESETS } from "./data/benchmarkPresets";
 import { getInitialLeaderboard } from "./data/seedLeaderboard";
@@ -50,6 +51,7 @@ export default function App() {
 
   // Multi-Page Navigation Tab: The Benchies marketing homepage by default
   const [activeTab, setActiveTab] = useState<ActiveTab>("the_benchies");
+  const [selectedSystemSuiteId, setSelectedSystemSuiteId] = useState<string | undefined>(undefined);
 
   // Evaluation & Judge State
   const [metrics, setMetrics] = useState<EvaluationMetrics | null>(null);
@@ -71,7 +73,7 @@ export default function App() {
     } catch (e) {
       console.error("Failed to read localStorage:", e);
     }
-    return getInitialLeaderboard();
+    return [];
   });
 
   useEffect(() => {
@@ -312,7 +314,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans antialiased flex flex-col">
+    <div className="min-h-screen bg-black text-white font-sans antialiased flex flex-col">
       {/* App Header with Multi-Page Navigation */}
       <Header
         onOpenPresets={() => setIsPresetModalOpen(true)}
@@ -324,9 +326,9 @@ export default function App() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+      <main className={`flex-1 w-full ${activeTab === "the_benchies" || activeTab === "system_benchmark" ? "" : "max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6 bg-slate-50 text-slate-900"}`}>
         {/* Active Context & Spec Status Bar (Visible in workbench tabs) */}
-        {activeTab !== "the_benchies" && (
+        {activeTab !== "the_benchies" && activeTab !== "system_benchmark" && (
           <div className="rounded-2xl bg-white border border-slate-200 p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3 shadow-xs">
             <div className="flex items-center space-x-2.5 flex-wrap gap-1.5">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
@@ -379,6 +381,17 @@ export default function App() {
             }}
             onInspectEntry={(entry) => setInspectingEntry(entry)}
             leaderboardEntries={leaderboard}
+            onStartSystemBenchmark={(suiteId) => {
+              setSelectedSystemSuiteId(suiteId);
+              setActiveTab("system_benchmark");
+            }}
+          />
+        )}
+
+        {activeTab === "system_benchmark" && (
+          <SystemBenchmarkPage
+            initialSuiteId={selectedSystemSuiteId}
+            onBackHome={() => setActiveTab("the_benchies")}
           />
         )}
 
@@ -519,26 +532,22 @@ export default function App() {
       <Toast toasts={toasts} onDismiss={removeToast} />
 
       {/* Footer */}
-      <footer className="border-t border-slate-200 bg-white py-6 text-xs text-slate-500">
+      <footer className="border-t border-zinc-800 bg-black py-6 text-xs text-zinc-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-sans text-xs">
           <div className="flex items-center space-x-3">
-            <span className="font-extrabold uppercase tracking-wider bg-slate-900 text-white text-[11px] px-2.5 py-1 rounded-md">
+            <span className="font-extrabold uppercase tracking-wider bg-red-600 text-white text-[11px] px-2.5 py-1">
               THE BENCHIES
             </span>
-            <span className="text-slate-600 font-medium">
-              Where Claims Meet Evidence • Pass or Fail in Public
+            <span className="text-zinc-500 font-medium">
+              Complete AI systems. Tested against evidence.
             </span>
           </div>
-          <div className="flex items-center space-x-4 font-semibold text-slate-600">
-            <button type="button" onClick={() => setActiveTab("the_benchies")} className="hover:text-slate-950 transition-colors cursor-pointer">Home</button>
+          <div className="flex flex-wrap items-center justify-center gap-4 font-semibold text-zinc-500">
+            <button type="button" onClick={() => setActiveTab("the_benchies")} className="hover:text-white transition-colors cursor-pointer">Home</button>
             <span>•</span>
-            <button type="button" onClick={() => setActiveTab("verbatim_diff")} className="hover:text-slate-950 transition-colors cursor-pointer">Diff Inspector</button>
+            <button type="button" onClick={() => setActiveTab("system_benchmark")} className="hover:text-white transition-colors cursor-pointer">Run Benchmark</button>
             <span>•</span>
-            <button type="button" onClick={() => setActiveTab("benchmark_lab")} className="hover:text-slate-950 transition-colors cursor-pointer">Benchmark Lab</button>
-            <span>•</span>
-            <button type="button" onClick={() => setActiveTab("audit_deepdive")} className="hover:text-slate-950 transition-colors cursor-pointer">Forensic Audit</button>
-            <span>•</span>
-            <button type="button" onClick={() => setActiveTab("leaderboard")} className="hover:text-slate-950 transition-colors cursor-pointer">Public Ledger</button>
+            <a href="https://github.com/ryanjordan11/benchies" className="hover:text-white transition-colors">GitHub</a>
           </div>
         </div>
       </footer>
