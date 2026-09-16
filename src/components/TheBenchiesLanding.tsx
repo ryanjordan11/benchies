@@ -122,7 +122,7 @@ export const TheBenchiesLanding: React.FC<TheBenchiesLandingProps> = ({
           {/* Eyebrow badge */}
           <div className="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50/80 px-4 py-1.5 text-xs font-semibold text-amber-900 shadow-2xs">
             <Flame className="w-4 h-4 text-amber-600 shrink-0" />
-            <span>The Benchies • Open AI Evaluation Arena</span>
+            <span>The Benchies • Public Evaluation Arena</span>
             <span className="w-1 h-1 rounded-full bg-amber-400"></span>
             <span className="text-amber-700 font-medium">Zero Private Evals</span>
           </div>
