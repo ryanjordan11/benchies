@@ -19,6 +19,11 @@ Base models.
 
 If it uses AI, bring it.
 
+<img width="1506" height="904" alt="Screenshot 2026-09-15 at 9 16 13 PM" src="https://github.com/user-attachments/assets/0b64c790-abbf-46f5-b348-937895e38bb2" />
+
+
+
+
 WHY BENCHIES EXISTS
 
 AI benchmarking has largely focused on models.
