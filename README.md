@@ -1,347 +1,256 @@
-BENCHIES
+# Benchies
 
 Open benchmarking for AI systems.
 
-Don’t tell us your AI is reliable. Prove it.
+Benchies is an open-source benchmarking framework for testing the reliability of AI models, agents, and complete AI systems under reproducible conditions.
 
-Benchies is an open, reproducible benchmarking framework for testing whether AI systems actually do what they claim.
+Most benchmarks test the model.
 
-Not just models.
+Benchies can test the whole system.
 
-Agents.
-RAG systems.
-Memory systems.
-Context architectures.
-Tool-using systems.
-Multi-agent systems.
-Production AI applications.
-Base models.
-
-If it uses AI, bring it.
+That includes base models, agents, RAG pipelines, memory systems, context systems, tool-using agents, multi-agent architectures, and production AI applications.
 
 <img width="1506" height="904" alt="Screenshot 2026-09-15 at 9 16 13 PM" src="https://github.com/user-attachments/assets/0b64c790-abbf-46f5-b348-937895e38bb2" />
 
 
 
+## Why Benchies?
 
-WHY BENCHIES EXISTS
+AI systems are increasingly being evaluated on claims such as reliability, factual accuracy, memory, verification, and autonomous performance.
 
-AI benchmarking has largely focused on models.
+Those claims should be testable.
 
-But users don't interact with benchmarks.
+Benchies provides a common framework where systems can be run against the same tests, under documented conditions, with results that can be inspected and reproduced.
 
-They interact with systems.
+The principle is simple:
 
-A production AI product might combine a frontier model with RAG, memory, agents, tools, databases, system prompts, verification layers, orchestration, and deterministic software.
+**Same test. Same rules. Show the evidence.**
 
-The model score doesn't tell you whether that system is reliable.
+## What Benchies Tests
 
-Benchies tests the system.
+Benchies is designed to support evaluations including:
 
-THE QUESTION
+* Hallucination
+* Factual accuracy
+* False-premise resistance
+* Source verification
+* Citation accuracy
+* Instruction adherence
+* Context retention
+* Context drift
+* Memory accuracy
+* Consistency
+* Uncertainty handling
+* Tool execution
+* Reproducibility
 
-Can your AI system be trusted to do what you say it does?
+Additional benchmark suites can be added as the project develops.
 
-Benchies doesn't answer that with marketing claims.
+## What Can Be Tested?
 
-It tests it.
-
-WHAT WE TEST
-
-Hallucination
-
-Does the system invent information that isn't supported by available evidence?
-
-False Premise Resistance
-
-Will the system accept something false simply because the user states it as fact?
-
-Verification
-
-When the system says it checked something, did it actually check it?
-
-Source Integrity
-
-Does the cited evidence actually support the claim being made?
-
-Context Drift
-
-Does the system preserve established facts, instructions, and constraints throughout an interaction?
-
-Memory Reliability
-
-Does stored information remain accurate across sessions without mutation, invention, or contamination?
-
-Instruction Adherence
-
-Does the system actually do what the user requested?
-
-Consistency
-
-Does the same system produce materially consistent results when tested repeatedly under controlled conditions?
-
-Uncertainty
-
-Does the system distinguish between what it knows, what the evidence establishes, and what remains unknown?
-
-Reproducibility
-
-Can someone else run the same test and obtain the same result?
-
-SYSTEMS, NOT JUST MODELS
-
-Benchies does not assume the model is the product.
+Benchies is system-agnostic.
 
 You can benchmark:
 
-Claude alone.
+* Base models
+* Hosted model APIs
+* Local models
+* AI agents
+* RAG systems
+* Memory architectures
+* Context architectures
+* Tool-using systems
+* Multi-agent systems
+* AI coding systems
+* Production AI applications
+* Hybrid deterministic/AI systems
 
-GPT alone.
+A benchmark submission should clearly identify what is being tested and its configuration.
 
-Gemini alone.
+## Benchmark Structure
 
-A RAG pipeline.
+Each benchmark should define:
 
-A multi-agent architecture.
+1. Input
+2. Available evidence
+3. Expected behavior
+4. Failure conditions
+5. Pass conditions
+6. Scoring method
+7. Execution environment
+8. Required result evidence
 
-A memory layer.
+This makes the evaluation itself inspectable rather than relying only on a final score.
 
-An enterprise copilot.
+## Deterministic Evaluation
 
-A legal AI system.
+Benchies uses deterministic evaluation wherever the result can be objectively determined.
 
-A healthcare AI system.
+For example:
 
-A coding agent.
+If a system claims it checked a source, the test should verify whether that source was actually accessed.
 
-A completely deterministic AI architecture.
+If a system cites evidence, the test should verify whether the cited evidence supports the claim.
 
-Or your entire production stack.
+If a known answer exists, the output should be compared against that answer.
 
-The system gets judged on what comes out the other end.
+If a required action should occur, the test should verify whether it occurred.
 
-HOW IT WORKS
+LLM-based judging may be used for tests that genuinely require semantic evaluation, but it should not replace deterministic evaluation when an objective check is possible.
 
-Every Benchies benchmark defines:
+## Results
 
-The input.
+A Benchies result should include enough information to understand and reproduce the test.
 
-The permitted evidence.
+At minimum:
 
-The expected behavior.
+* System name
+* System version
+* Model(s)
+* Configuration
+* Benchmark version
+* Test results
+* Pass/fail status
+* Raw outputs
+* Evidence
+* Timestamp
 
-The prohibited behavior.
+Results should distinguish between self-run and independently reproduced evaluations.
 
-The pass conditions.
+## Scoring
 
-The failure conditions.
+Individual benchmark suites define their own scoring rules.
 
-The scoring method.
+Typical metrics may include:
 
-The environment.
+* Pass rate
+* Failure rate
+* Hallucination rate
+* Verification accuracy
+* Citation accuracy
+* Context retention
+* Memory accuracy
+* Reproducibility rate
 
-The evidence required to reproduce the result.
+Benchies does not combine unrelated metrics into a single reliability number unless the benchmark explicitly defines and documents that calculation.
 
-Run the test.
+## Reproducibility
 
-Capture the output.
+A benchmark result is significantly more useful when someone else can reproduce it.
 
-Evaluate it.
+Benchies therefore encourages publishing:
 
-Publish the evidence.
+* Test configuration
+* Benchmark version
+* System configuration
+* Raw responses
+* Evaluation output
+* Relevant logs
+* Scoring results
 
-No mystery score.
+If a result cannot be independently reproduced, that limitation should be visible.
 
-No private benchmark result that nobody else can inspect.
+## Leaderboard
 
-DETERMINISTIC FIRST
+Benchies is being designed to support public leaderboards for both models and complete AI systems.
 
-Where something can be evaluated deterministically, Benchies should evaluate it deterministically.
+Results should identify the type of system being tested so that users can distinguish between:
 
-If a system claims:
+* Model-only results
+* Agent systems
+* RAG systems
+* Memory-enabled systems
+* Multi-agent systems
+* Hybrid systems
+* Full production applications
 
-“I checked the document.”
+The goal is not simply to determine which model scores highest.
 
-Benchies should determine whether the document was actually accessed.
+The goal is to determine what actually works.
 
-If a system cites a source:
+## Running Benchies
 
-Benchies should determine whether that source contains the claimed evidence.
+Benchies is currently under development.
 
-If the correct answer exists in structured data:
+Installation and execution instructions will be added as the benchmark runner and initial test suites are released.
 
-Compare against the structured data.
+Expected usage:
 
-If an action was required:
+```bash
+git clone https://github.com/YOUR-USERNAME/benchies.git
+cd benchies
 
-Verify whether the action occurred.
+npm install
 
-An LLM should not be the judge simply because an LLM is convenient.
+npm run bench
+```
 
-AI judging AI should be used only where deterministic evaluation cannot reasonably determine the result, and those evaluations should be clearly identified.
+Exact commands may change during initial development.
 
-THE BENCHIES PRINCIPLE
+## Repository Structure
 
-Claim → Test → Evidence → Result
+```text
+benchies/
+├── benchmarks/
+│   ├── hallucination/
+│   ├── verification/
+│   ├── context/
+│   └── memory/
+├── runner/
+├── evaluators/
+├── results/
+├── schemas/
+├── docs/
+└── README.md
+```
 
-Not:
+## Contributing
 
-Claim → AI Judge → Another AI Judge → Trust us.
+Contributions are welcome.
 
-PUBLIC RESULTS
+You can contribute by:
 
-Benchies is designed around transparent results.
+* Creating benchmark tests
+* Adding deterministic evaluators
+* Improving scoring methodology
+* Reproducing published results
+* Reporting benchmark weaknesses
+* Adding system adapters
+* Improving documentation
 
-A result should tell you:
+A benchmark should be challengeable.
 
-What system was tested.
+If you find a flaw in a Benchies test, open an issue or submit a pull request with evidence.
 
-What version was tested.
+## Submitting a System
 
-What configuration was used.
+Support for standardized system submissions is being developed.
 
-What test was run.
+The goal is to allow developers to connect their system to the Benchies runner without requiring Benchies to know how the underlying architecture works.
 
-What evidence was available.
+Your architecture can be proprietary.
 
-What happened.
+Your result still needs to be verifiable.
 
-Why it passed or failed.
+## Status
 
-Whether the result was independently reproduced.
+Benchies is in active development.
 
-A score without that information is just a number.
+The initial focus is reliability testing for hallucination, verification, context integrity, memory, and reproducibility.
 
-LEADERBOARDS
+Expect the benchmark specification and runner to evolve as testing expands.
 
-Benchies leaderboards can compare complete systems while preserving important distinctions between architectures.
+## License
 
-Model-only.
+License to be determined before the first stable release.
 
-RAG.
+## The Benchies
 
-Agent.
+Benchies isn't just about benchmarking models.
 
-Multi-agent.
+It's about testing whether the systems we're building can actually support the claims being made about them.
 
-Memory-enabled.
+**Bring your system. Run the test. Show the evidence.**
 
-Deterministic/hybrid.
 
-Production system.
 
-Results should identify exactly what was tested so we're comparing systems honestly.
-
-THE BENCHIES
-
-And yes, eventually:
-
-The Benchies.
-
-Awards earned through testing rather than marketing.
-
-Most Reliable AI System.
-
-Lowest Hallucination Rate.
-
-Best Verification System.
-
-Best Memory Reliability.
-
-Best Context Integrity.
-
-Best Production Agent.
-
-Best Deterministic Architecture.
-
-And perhaps the most important:
-
-The Trust Benchmark.
-
-But nobody gets onto the carpet because they said their system works.
-
-You earn your way there with evidence.
-
-BRING YOUR AI
-
-Think your architecture solved hallucinations?
-
-Bring it.
-
-Built the best memory system?
-
-Bring it.
-
-Think your agent is production-ready?
-
-Bring it.
-
-Think adding twelve agents makes your system reliable?
-
-Great.
-
-Bring all twelve.
-
-Think your base model can beat an engineered system?
-
-Run it.
-
-Think Benchies itself is wrong?
-
-Challenge the benchmark.
-
-The benchmark should be accountable too.
-
-OPEN BY DESIGN
-
-Benchies should be public.
-
-Tests should be inspectable.
-
-Scoring should be inspectable.
-
-Changes should be versioned.
-
-Results should be reproducible.
-
-Failures should be publishable.
-
-Successful results should be publishable.
-
-Benchmark methodology should be open to criticism.
-
-Because if we're going to measure trust, the measurement system itself has to be trustworthy.
-
-BUILD WITH US
-
-Benchies is being built as an open testing ground for AI reliability.
-
-Researchers, developers, AI companies, startups, enterprises, independent engineers, red teams, and anyone building AI systems are welcome.
-
-Submit a benchmark.
-
-Challenge a benchmark.
-
-Submit your system.
-
-Reproduce a result.
-
-Find a flaw.
-
-Improve the methodology.
-
-Break something.
-
-Then prove you broke it.
-
-BENCHIES
-
-Bring your system.
-
-Same test.
-
-Same rules.
-
-Show the evidence.
-
-Evidence or it didn't happen.
