@@ -1,0 +1,6 @@
+{
+  "name": "Hallucination Benchmark",
+  "description": "The Benchies: An open public benchmark where AI claims meet evidence. Evaluate hallucinations verification, determinism, context drift, and reproducibility.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
